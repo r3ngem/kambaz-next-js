@@ -1,96 +1,113 @@
+import { Col, Form, FormControl, FormGroup, FormLabel, FormSelect, InputGroup, Row } from "react-bootstrap";
+import InputGroupText from "react-bootstrap/esm/InputGroupText";
+import { FaRegCalendarAlt } from "react-icons/fa";
+
 export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label><br /><br />
-      <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-      <textarea id="wd-description">
-        The assignment is available online Submit a link to the landing page of
-      </textarea>
-      <br /><br />
-      <table>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" value={100} /><br /><br />
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-group">Assigntment Group</label>
-          </td>
-          <td>
-            <select id="wd-group">
-            <option selected value="ASSIGNMENTS">
+      <Form>
+        <div className="form-group">
+      <FormLabel htmlFor="wd-name">Assignment Name</FormLabel><br />
+      <FormControl id="wd-name" placeholder="A1 - ENV + HTML" /><br />
+      </div>
+      <div className="form-group">
+      <FormControl as="textarea" id="wd-description" placeholder="The assignment is available online" /> 
+      <br />
+      </div>
+        <Row>
+          <Col className="ms-5" xs={2}>
+            <FormLabel htmlFor="wd-points" className="me-3">Points</FormLabel>
+          </Col>
+          <Col>
+            <FormControl id="wd-points" placeholder="100" /><br />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="ms-5" xs={2}>
+            <FormLabel htmlFor="wd-group" className="me-3">Assignment Group</FormLabel>
+          </Col>
+          <Col>
+            <FormSelect id="wd-group">
+            <option defaultChecked>
             ASSIGNMENTS</option>
-            </select><br /><br />
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-display-grade-as">Display Grade as</label>
-          </td>
-          <td>
-            <select id="wd-display-grade-as">
-            <option selected value="Percentage">
+            <option>
+            QUIZZES</option>
+            <option>
+            EXAMS</option>
+            <option>
+            PROJECT</option>
+            </FormSelect><br />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="ms-5" xs={2}>
+            <FormLabel htmlFor="wd-display-grade-as" className="me-3">Display Grade as</FormLabel>
+          </Col> 
+          <Col>
+            <FormSelect id="wd-display-grade-as">
+            <option defaultChecked>
             Percentage</option>
-            </select><br /><br />
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-submission-type">Submission Type</label>
-          </td>
-          <td>
-            <select id="wd-submission-type">
-            <option selected value="Online">
+            </FormSelect><br />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="ms-5" xs={2}>
+            <FormLabel htmlFor="wd-submission-type" className="me-3">Submission Type</FormLabel>
+          </Col>
+          <Col>
+            <FormSelect id="wd-submission-type">
+            <option defaultChecked>
             Online</option>
-            </select><br /><br />
-            <label>Online Entry Options</label><br/>
-            <input type="checkbox" name="check-sub-type" id="wd-text-entry"/>
-            <label htmlFor="wd-text-entry">Text Entry</label><br/>
-            <input type="checkbox" name="check-sub-type" id="wd-website-url"/>
-            <label htmlFor="wd-website-url">Website URL</label><br/>
-            <input type="checkbox" name="check-sub-type" id="wd-media-recordings"/>
-            <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
-            <input type="checkbox" name="check-sub-type" id="wd-student-annotation"/>
-            <label htmlFor="wd-student-annotation">Student Annotation</label><br/>
-            <input type="checkbox" name="check-sub-type" id="wd-file-upload"/>
-            <label htmlFor="wd-file-upload">File Upload</label><br /><br />
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-assign-to">Assign</label>
-          </td>
-            <label htmlFor="wd-assign-to">Assign To</label>
-          <tr>
-          <td>
-            <td>
-                <input id="wd-assign-to" value='Everyone' />
-            </td><br/>
-            <td>
-            <label htmlFor="wd-due-date">Due</label><br/>
-            <input type="date"
-                value="2024-05-13"
-                id="wd-due-date"/>
-            </td><br/>
-            <td>
-            <label htmlFor="wd-available-from">Available from</label><br/>
-            <input type="date"
-                value="2024-05-06"
-                id="wd-available-from"/>
-            </td>
-            <td>
-                <label htmlFor="wd-available-until">Until</label><br/>
-                <input type="date"
-                value="2024-05-20"
-                id="wd-available-until"/>   
-            </td>
-          </td>
-          </tr>
-        </tr>
-      </table>
+            </FormSelect><br />
+            <FormLabel><b>Online Entry Options</b></FormLabel><br/>
+            <input type="checkbox" name="check-sub-type" id="wd-text-entry" className="me-2"/>
+            <FormLabel htmlFor="wd-text-entry">Text Entry</FormLabel><br/>
+            <input type="checkbox" name="check-sub-type" id="wd-website-url" className="me-2"/>
+            <FormLabel htmlFor="wd-website-url">Website URL</FormLabel><br/>
+            <input type="checkbox" name="check-sub-type" id="wd-media-recordings" className="me-2"/>
+            <FormLabel htmlFor="wd-media-recordings">Media Recordings</FormLabel><br/>
+            <input type="checkbox" name="check-sub-type" id="wd-student-annotation" className="me-2"/>
+            <FormLabel htmlFor="wd-student-annotation">Student Annotation</FormLabel><br/>
+            <input type="checkbox" name="check-sub-type" id="wd-file-upload" className="me-2"/>
+            <FormLabel htmlFor="wd-file-upload">File Upload</FormLabel><br /><br />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="ms-5" xs={2}>
+            <FormLabel htmlFor="wd-assign-to" className="me-3">Assign</FormLabel>
+          </Col>
+          <Col>
+            <Row>
+              <FormLabel htmlFor="wd-assign-to"><b>Assign To</b></FormLabel>
+            </Row>
+            <Row className="me-1 ms-1">
+                <input id="wd-assign-to" placeholder='Everyone' />
+            </Row><br/>
+            <Col>
+            <FormLabel htmlFor="wd-due-date"><b>Due</b></FormLabel><br/>
+            <InputGroup>
+            <FormControl id="wd-due-date" placeholder="May 13, 2024, 11:59 PM" />
+            <InputGroupText><FaRegCalendarAlt /></InputGroupText>
+            </InputGroup>
+            </Col><br/>
+            <Row>
+            <Col>
+            <FormLabel htmlFor="wd-available-from"><b>Available from</b></FormLabel><br/>
+            <InputGroup>
+            <FormControl id="wd-due-date" placeholder="May 6, 2024, 11:59 PM" />
+            <InputGroupText><FaRegCalendarAlt /></InputGroupText>
+            </InputGroup>
+            </Col>
+            <Col>
+                <FormLabel htmlFor="wd-available-until"><b>Until</b></FormLabel><br/>
+                <InputGroup>
+            <FormControl id="wd-due-date" placeholder="May 13, 2024, 11:59 PM" />
+            <InputGroupText><FaRegCalendarAlt /></InputGroupText>
+            </InputGroup>
+            </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Form>
     </div>
 );}
