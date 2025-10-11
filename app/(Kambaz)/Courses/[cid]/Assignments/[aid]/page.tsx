@@ -8,6 +8,10 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const assignment = assignments.find((assignment) => assignment._id === aid);
+
+  if (!assignment) {
+    return <div>Assignment not found.</div>
+  }
   return (
     <div id="wd-assignments-editor">
       <Form>
