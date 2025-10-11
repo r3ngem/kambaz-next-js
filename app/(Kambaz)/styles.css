@@ -55,3 +55,7 @@ body * {
   padding: 5px;
 }
 
+.assignment-editor-save {
+  background-color: red;
+  padding: 10px;
+}

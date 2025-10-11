@@ -1,12 +1,18 @@
+/* eslint-disable react/jsx-key */
+"use client"
+import { useParams } from "next/navigation";
+import * as db from "../../../Database";
 import Link from 'next/link';
 import AssignmentsControls from './AssignmentsControls';
-import { Col, ListGroup, ListGroupItem, Row, Table } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { BsGripVertical } from 'react-icons/bs';
 import { FaCaretDown } from "react-icons/fa";
 import { LuNotebookPen } from "react-icons/lu";
 import AssignmentControlButtons from './AssignmentControlButtons';
 import LessonControlButtons from './LessonControlButtons';
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments;
   return (
     <div id="wd-assignments"> 
     <AssignmentsControls /><br /><br />
@@ -21,60 +27,27 @@ export default function Assignments() {
               </div>
             </div>
           <ListGroup className="wd-assignments rounded-0">
+            {assignments
+          .filter((assignment: any) => assignment.course === cid)
+          .map((assignment: any) => (
             <ListGroupItem className="wd-assignment p-3 ps-1 d-flex align-items-center flex-nowrap">
               <BsGripVertical className="me-2 fs-3" /> 
               <LuNotebookPen className="me-2 fs-4" style={{color: 'green'}}/>
               <div className="assignment-subtext">
-                <Link href="/Courses/1234/Assignments/123"
-             className="wd-assignment-link border-0 text-dark" ><b className="fs-3">A1</b></Link>
+                <Link href={`/Courses/${cid}/Assignments/${assignment._id}`}
+             className="wd-assignment-link border-0 text-dark" ><b className="fs-3">{assignment.title}</b></Link>
                 <p> 
                   <span className="red-module">
                     Multiple Modules
                     </span>
-                    | <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100pts
+                    | <b>Not available until</b> {assignment.release} | <b>Due</b> {assignment.due} | 100pts
                     </p>
               </div>
           
               <div className="ms-auto">
               <LessonControlButtons />
               </div>
-              </ListGroupItem>
-              <ListGroupItem className="wd-assignment p-3 ps-1 d-flex align-items-center flex-nowrap">
-              <BsGripVertical className="me-2 fs-3" /> 
-              <LuNotebookPen className="me-2 fs-4" style={{color: 'green'}}/>
-              <div className="assignment-subtext">
-                <Link href="/Courses/1234/Assignments/123"
-             className="wd-assignment-link border-0 text-dark" ><b className="fs-3">A2</b></Link>
-                <p> 
-                  <span className="red-module">
-                    Multiple Modules
-                    </span>
-                    | <b>Not available until</b> May 13 at 12:00am | <b>Due</b> May 20 at 11:59pm | 100pts
-                    </p>
-              </div>
-          
-              <div className="ms-auto">
-              <LessonControlButtons />
-              </div>
-              </ListGroupItem>
-              <ListGroupItem className="wd-assignment p-3 ps-1 d-flex align-items-center flex-nowrap">
-              <BsGripVertical className="me-2 fs-3" /> 
-              <LuNotebookPen className="me-2 fs-4" style={{color: 'green'}}/>
-              <div className="assignment-subtext">
-                <Link href="/Courses/1234/Assignments/123"
-             className="wd-assignment-link border-0 text-dark" ><b className="fs-3">A3</b></Link>
-                <p> 
-                  <span className="red-module">
-                    Multiple Modules
-                    </span>
-                    | <b>Not available until</b> May 20 at 12:00am | <b>Due</b> May 27 at 11:59pm | 100pts
-                    </p>
-              </div>
-          
-              <div className="ms-auto">
-              <LessonControlButtons />
-              </div>
-              </ListGroupItem>
+              </ListGroupItem>))}
               </ListGroup>
             </ListGroupItem>
             </ListGroup>

@@ -1,14 +1,19 @@
-import { Col, Form, FormControl, FormGroup, FormLabel, FormSelect, InputGroup, Row } from "react-bootstrap";
+"use client"
+import { useParams } from "next/navigation";
+import { assignments } from "../../../../Database";
+import { Button, Col, Form, FormControl, FormLabel, FormSelect, InputGroup, Row } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = assignments.find((assignment) => assignment._id === aid);
   return (
     <div id="wd-assignments-editor">
       <Form>
         <div className="form-group">
       <FormLabel htmlFor="wd-name">Assignment Name</FormLabel><br />
-      <FormControl id="wd-name" placeholder="A1 - ENV + HTML" /><br />
+      <FormControl id="wd-name" placeholder={assignment.title} /><br />
       </div>
       <div className="form-group">
       <FormControl as="textarea" id="wd-description" placeholder="The assignment is available online" /> 
@@ -94,20 +99,24 @@ export default function AssignmentEditor() {
             <Col>
             <FormLabel htmlFor="wd-available-from"><b>Available from</b></FormLabel><br/>
             <InputGroup>
-            <FormControl id="wd-due-date" placeholder="May 6, 2024, 11:59 PM" />
+            <FormControl id="wd-due-date" placeholder={assignment.release} />
             <InputGroupText><FaRegCalendarAlt /></InputGroupText>
             </InputGroup>
             </Col>
             <Col>
                 <FormLabel htmlFor="wd-available-until"><b>Until</b></FormLabel><br/>
                 <InputGroup>
-            <FormControl id="wd-due-date" placeholder="May 13, 2024, 11:59 PM" />
+            <FormControl id="wd-due-date" placeholder={assignment.due} />
             <InputGroupText><FaRegCalendarAlt /></InputGroupText>
             </InputGroup>
             </Col>
             </Row>
           </Col>
         </Row>
-      </Form>
+      </Form>< br />
+      <div className="float-end" id="assignment-editor-buttons">
+        <Button variant="danger" size="lg" className="me-1 float-end" id="wd-view-progress">Save</Button>
+        <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-collapse-all">Cancel</Button>
+      </div>
     </div>
 );}
