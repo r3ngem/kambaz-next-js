@@ -1,7 +1,7 @@
 "use client"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-export default function CourseNavigation({cid}) {
+export default function CourseNavigation({cid}: { cid: string }) {
   const pathname = usePathname();
   const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
   return (
