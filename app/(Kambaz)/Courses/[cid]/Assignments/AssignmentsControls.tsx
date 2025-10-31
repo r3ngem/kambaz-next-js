@@ -11,7 +11,8 @@ export default function AssignmentsControls() {
             <FormControl placeholder="Search..."
              id="wd-search-assignment" /> 
             </InputGroup>
-     <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-collapse-all">
+     <Button variant="secondary" 
+     size="lg" className="me-1 float-end" id="wd-collapse-all">
        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
        Group
      </Button>
