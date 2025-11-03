@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer";
 import { Button, FormControl, FormSelect } from "react-bootstrap";
+import { RootState } from "../../store";
 export default function Profile() {
    const [profile, setProfile] = useState<any>({});
  const dispatch = useDispatch();
- const { currentUser } = useSelector((state: any) => state.accountReducer);
+ const { currentUser } = useSelector((state: RootState) => state.accountReducer);
  const fetchProfile = () => {
    if (!currentUser) return redirect("/Account/Signin");
    setProfile(currentUser);

@@ -8,11 +8,12 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { addAssignment, updateAssignment } from "../reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { RootState } from "../../../../store";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const router = useRouter();
-  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
   const current = assignments.find((a: any) => a._id === aid);
   const dispatch = useDispatch();
 

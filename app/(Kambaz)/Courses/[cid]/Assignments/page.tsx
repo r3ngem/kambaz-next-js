@@ -15,9 +15,10 @@ import LessonControlButtons from './LessonControlButtons';
 import { deleteAssignment } from "./reducer";
 import { useState } from "react";
 import AssignmentDelete from "./AssignmentDelete";
+import { RootState } from "../../../store";
 export default function Assignments() {
   const { cid } = useParams();
-  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
   const dispatch = useDispatch();
 
   const [showDelete, setShowDelete] = useState(false);
