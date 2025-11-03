@@ -46,7 +46,7 @@ export default function AssignmentEditor() {
       onChange={(e) => setAssignment({ ...assignment, title: e.target.value})} /><br />
       </div>
       <div className="form-group">
-      <FormControl as="textarea" id="wd-description" value={assignment.description}
+      <FormControl as="textarea" id="wd-description" value=""
       onChange={(e) => setAssignment({ ...assignment, description: e.target.value})} /> 
       <br />
       </div>
@@ -55,7 +55,7 @@ export default function AssignmentEditor() {
             <FormLabel htmlFor="wd-points" className="me-3">Points</FormLabel>
           </Col>
           <Col>
-            <FormControl id="wd-points" value={assignment.points} 
+            <FormControl id="wd-points" value="100"
             onChange={(e) => setAssignment({ ...assignment, points: e.target.value})}/><br />
           </Col>
         </Row>
