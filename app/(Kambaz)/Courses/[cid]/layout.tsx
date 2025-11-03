@@ -21,7 +21,7 @@ export default function CoursesLayout({ children }: { children: ReactNode }) {
       </h2>
       <hr />
      <div className="d-flex">
-    {nav && (<div className="d-none d-md-block"> <CourseNavigation cid={cid}/> </div>)}
+    {nav && (<div className="d-none d-md-block"> <CourseNavigation cid={cid as string}/> </div>)}
            <div className="flex-fill"> {children} </div>
       </div>
    </div>
