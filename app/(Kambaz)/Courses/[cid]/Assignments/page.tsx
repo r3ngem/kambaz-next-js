@@ -1,19 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-key */
 "use client"
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "next/navigation";
 import * as db from "../../../Database";
 import Link from 'next/link';
 import AssignmentsControls from './AssignmentsControls';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { BsGripVertical } from 'react-icons/bs';
-import { FaCaretDown } from "react-icons/fa";
+import { FaCaretDown, FaTrash } from "react-icons/fa";
 import { LuNotebookPen } from "react-icons/lu";
 import AssignmentControlButtons from './AssignmentControlButtons';
 import LessonControlButtons from './LessonControlButtons';
+import { deleteAssignment } from "./reducer";
+import { useState } from "react";
+import AssignmentDelete from "./AssignmentDelete";
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const dispatch = useDispatch();
+
+  const [showDelete, setShowDelete] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState<any>(null);
+
+  const handleOpenDelete = (assignment: any) => {
+    setSelectedAssignment(assignment);
+    setShowDelete(true);
+  };
+
+  const handleDeleteAssignment = () => {
+    if (selectedAssignment) {
+      dispatch(deleteAssignment(selectedAssignment._id));
+      setSelectedAssignment(null);
+    }
+  };
+  
   return (
     <div id="wd-assignments"> 
     <AssignmentsControls /><br /><br />
@@ -31,7 +52,7 @@ export default function Assignments() {
             {assignments
           .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any) => (
-            <ListGroupItem className="wd-assignment p-3 ps-1 d-flex align-items-center flex-nowrap">
+            <ListGroupItem key={assignment._id} className="wd-assignment p-3 ps-1 d-flex align-items-center flex-nowrap">
               <BsGripVertical className="me-2 fs-3" /> 
               <LuNotebookPen className="me-2 fs-4" style={{color: 'green'}}/>
               <div className="assignment-subtext">
@@ -46,6 +67,10 @@ export default function Assignments() {
               </div>
           
               <div className="ms-auto">
+                <FaTrash
+                      className="text-danger me-2 mb-1"
+                      onClick={() => handleOpenDelete(assignment)}
+                    />
               <LessonControlButtons />
               </div>
               </ListGroupItem>))}
@@ -94,5 +119,11 @@ export default function Assignments() {
             </div>
             </ListGroupItem>
             </ListGroup>
+            <AssignmentDelete
+        show={showDelete}
+        handleClose={() => setShowDelete(false)}
+        handleDelete={handleDeleteAssignment}
+        assignmentTitle={selectedAssignment?.title || ''}
+      />
     </div>
 );}

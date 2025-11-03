@@ -1,26 +1,52 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { assignments } from "../../../../Database";
 import { Button, Col, Form, FormControl, FormLabel, FormSelect, InputGroup, Row } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { addAssignment, updateAssignment } from "../reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = assignments.find((assignment) => assignment._id === aid);
+  const router = useRouter();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const current = assignments.find((a: any) => a._id === aid);
+  const dispatch = useDispatch();
 
-  if (!assignment) {
-    return <div>Assignment not found.</div>
+  const[assignment, setAssignment] = useState(
+    current || {
+      title: "",
+      description: "",
+      points: "",
+      due: "",
+      release: "",
+      course: cid
+    }
+  );
+
+  const handleSave = () => {
+    if (current) {
+      dispatch(updateAssignment(assignment));
+    } else {
+      dispatch(addAssignment(assignment));
+    }
+    router.push(`/Courses/${cid}/Assignments`)
   }
+
   return (
     <div id="wd-assignments-editor">
       <Form>
         <div className="form-group">
       <FormLabel htmlFor="wd-name">Assignment Name</FormLabel><br />
-      <FormControl id="wd-name" placeholder={assignment.title} /><br />
+      <FormControl id="wd-name" value={assignment.title} 
+      onChange={(e) => setAssignment({ ...assignment, title: e.target.value})} /><br />
       </div>
       <div className="form-group">
-      <FormControl as="textarea" id="wd-description" placeholder="The assignment is available online" /> 
+      <FormControl as="textarea" id="wd-description" value={assignment.description}
+      onChange={(e) => setAssignment({ ...assignment, description: e.target.value})} /> 
       <br />
       </div>
         <Row>
@@ -28,7 +54,8 @@ export default function AssignmentEditor() {
             <FormLabel htmlFor="wd-points" className="me-3">Points</FormLabel>
           </Col>
           <Col>
-            <FormControl id="wd-points" placeholder="100" /><br />
+            <FormControl id="wd-points" value={assignment.points} 
+            onChange={(e) => setAssignment({ ...assignment, points: e.target.value})}/><br />
           </Col>
         </Row>
         <Row>
@@ -95,7 +122,8 @@ export default function AssignmentEditor() {
             <Col>
             <FormLabel htmlFor="wd-due-date"><b>Due</b></FormLabel><br/>
             <InputGroup>
-            <FormControl id="wd-due-date" placeholder="May 13, 2024, 11:59 PM" />
+            <FormControl id="wd-due-date" value={assignment.due} 
+            onChange={(e) => setAssignment({ ...assignment, due: e.target.value})}/>
             <InputGroupText><FaRegCalendarAlt /></InputGroupText>
             </InputGroup>
             </Col><br/>
@@ -103,14 +131,16 @@ export default function AssignmentEditor() {
             <Col>
             <FormLabel htmlFor="wd-available-from"><b>Available from</b></FormLabel><br/>
             <InputGroup>
-            <FormControl id="wd-due-date" placeholder={assignment.release} />
+            <FormControl id="wd-due-date" value={assignment.release} 
+            onChange={(e) => setAssignment({ ...assignment, release: e.target.value})}/>
             <InputGroupText><FaRegCalendarAlt /></InputGroupText>
             </InputGroup>
             </Col>
             <Col>
                 <FormLabel htmlFor="wd-available-until"><b>Until</b></FormLabel><br/>
                 <InputGroup>
-            <FormControl id="wd-due-date" placeholder={assignment.due} />
+            <FormControl id="wd-due-date" value={assignment.due}
+            onChange={(e) => setAssignment({ ...assignment, due: e.target.value})} />
             <InputGroupText><FaRegCalendarAlt /></InputGroupText>
             </InputGroup>
             </Col>
@@ -119,8 +149,10 @@ export default function AssignmentEditor() {
         </Row>
       </Form>< br />
       <div className="float-end" id="assignment-editor-buttons">
-        <Button variant="danger" size="lg" className="me-1 float-end" id="wd-view-progress">Save</Button>
-        <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-collapse-all">Cancel</Button>
+        <Button variant="danger" size="lg" className="me-1 float-end" id="wd-view-progress"
+        onClick={handleSave}>Save</Button>
+        <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-collapse-all"
+        href={`/Courses/${cid}/Assignments`}>Cancel</Button>
       </div>
     </div>
 );}
