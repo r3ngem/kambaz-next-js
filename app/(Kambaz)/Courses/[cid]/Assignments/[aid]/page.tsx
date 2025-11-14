@@ -5,10 +5,11 @@ import { assignments } from "../../../../Database";
 import { Button, Col, Form, FormControl, FormLabel, FormSelect, InputGroup, Row } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { addAssignment, updateAssignment } from "../reducer";
+import { addAssignment, setAssignments, updateAssignment } from "../reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../../../store";
+import * as client from "../client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -28,11 +29,26 @@ export default function AssignmentEditor() {
     }
   );
 
-  const handleSave = () => {
+  const onCreateAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = { ...assignment, course: cid };
+    const created = await client.createAssignmentForCourse(cid as string, newAssignment);
+    dispatch(setAssignments([...assignments, created]));
+  };
+
+   const onUpdateAssignment = async (assignment: any) => {
+    await client.updateAssignment(assignment);
+    const newAssignments = assignments.map((m: any) => m._id === assignment._id ? assignment : m );
+    dispatch(setAssignments(newAssignments));
+  };
+
+
+
+  const handleSave = async () => {
     if (current) {
-      dispatch(updateAssignment(assignment));
+     await onUpdateAssignment(assignment);
     } else {
-      dispatch(addAssignment(assignment));
+      await onCreateAssignmentForCourse();
     }
     router.push(`/Courses/${cid}/Assignments`)
   }

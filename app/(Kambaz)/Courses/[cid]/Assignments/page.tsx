@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-key */
 "use client"
@@ -12,10 +13,11 @@ import { FaCaretDown, FaTrash } from "react-icons/fa";
 import { LuNotebookPen } from "react-icons/lu";
 import AssignmentControlButtons from './AssignmentControlButtons';
 import LessonControlButtons from './LessonControlButtons';
-import { deleteAssignment } from "./reducer";
-import { useState } from "react";
+import { setAssignments, deleteAssignment } from "./reducer";
+import { useState, useEffect } from "react";
 import AssignmentDelete from "./AssignmentDelete";
 import { RootState } from "../../../store";
+import * as client from "./client";
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
@@ -24,17 +26,31 @@ export default function Assignments() {
   const [showDelete, setShowDelete] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<any>(null);
 
+  const onRemoveAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(setAssignments(assignments.filter((m: any) => m._id !== assignmentId)));
+  };
+  
   const handleOpenDelete = (assignment: any) => {
     setSelectedAssignment(assignment);
     setShowDelete(true);
   };
 
-  const handleDeleteAssignment = () => {
+  const handleDeleteAssignment = async () => {
     if (selectedAssignment) {
-      dispatch(deleteAssignment(selectedAssignment._id));
+      await onRemoveAssignment(selectedAssignment._id);
       setSelectedAssignment(null);
     }
   };
+
+   const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
   
   return (
     <div id="wd-assignments"> 
@@ -51,7 +67,6 @@ export default function Assignments() {
             </div>
           <ListGroup className="wd-assignments rounded-0">
             {assignments
-          .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any) => (
             <ListGroupItem key={assignment._id} className="wd-assignment p-3 ps-1 d-flex align-items-center flex-nowrap">
               <BsGripVertical className="me-2 fs-3" /> 
