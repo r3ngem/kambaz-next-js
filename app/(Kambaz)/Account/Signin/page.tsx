@@ -8,6 +8,7 @@ import { useState } from "react";
 import * as db from "../../Database";
 import { FormControl, Button } from "react-bootstrap";
 import * as client from "../client";
+import router from "next/router";
 
 export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});
@@ -16,7 +17,7 @@ export default function Signin() {
    const user = await client.signin(credentials);
    if (!user) return;
    dispatch(setCurrentUser(user));
-   redirect("/Dashboard");
+   router.push("/Dashboard");
  };
 
  return (

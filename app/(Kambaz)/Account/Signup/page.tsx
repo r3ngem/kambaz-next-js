@@ -7,13 +7,14 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { FormControl, Button } from "react-bootstrap";
 import * as client from "../client";
+import router from "next/router";
 export default function Signup() {
   const [user, setUser] = useState<any>({});
   const dispatch = useDispatch();
   const signup = async () => {
     const currentUser = await client.signup(user);
     dispatch(setCurrentUser(currentUser));
-    redirect("/Profile");
+    router.push("/Profile");
   };
 
   return (

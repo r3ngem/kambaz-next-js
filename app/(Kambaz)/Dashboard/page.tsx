@@ -46,8 +46,10 @@ export default function Dashboard() {
     }
   };
   useEffect(() => {
+    if (currentUser && currentUser._id) {
     fetchCourses();
-  }, [currentUser]);
+  }
+}, [currentUser]);
 
 
   return (
