@@ -8,7 +8,6 @@ import { useState } from "react";
 import * as db from "../../Database";
 import { FormControl, Button } from "react-bootstrap";
 import * as client from "../client";
-import router from "next/router";
 
 export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});
