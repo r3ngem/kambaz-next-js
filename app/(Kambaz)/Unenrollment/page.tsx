@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { Button, FormCheck } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { redirect } from "next/navigation";
-import { setCourses } from "../reducer";
-import { RootState } from "../../store";
-import * as client from "../Unenrollment/client";
-import * as clientCourse from "../../Courses/client";
+import { setCourses } from "../Courses/reducer";
+import { RootState } from "../store";
+import * as client from "./client";
+import * as clientCourse from "../Courses/client";
 
 export default function UnenrollmentPage() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
