@@ -50,27 +50,32 @@ export default function UnenrollmentPage() {
 
   return (
     <div>
-      <h1 id="wd-enrollment-title">Available Courses</h1>
-      <hr />
-      {courses.map((course) => (
-        <FormCheck
-          key={course._id}
-          type="checkbox"
-          id={`course-${course._id}`}
-          label={course.name}
-          checked={selected.includes(course._id)}
-          onChange={() => toggleSelection(course._id)}
-          className="mb-2"
-        />
-      ))}
-      <Button
-        variant="danger"
-        size="lg"
-        className="float-end mt-3"
-        onClick={saveUnenrollment}
-      >
-        Save Unenrollment
-      </Button>
-    </div>
+  <h1 id="wd-enrollment-title">My Courses</h1>
+  <hr />
+
+  {courses.length === 0 && <p>You are not enrolled in any courses.</p>}
+
+  {courses.map((course) => (
+    <FormCheck
+      key={course._id}
+      type="checkbox"
+      id={`course-${course._id}`}
+      label={course.name}
+      checked={selected.includes(course._id)}
+      onChange={() => toggleSelection(course._id)}
+      className="mb-2"
+    />
+  ))}
+
+  <Button
+    variant="danger"
+    size="lg"
+    className="mt-3"
+    onClick={saveUnenrollment}
+    disabled={selected.length === 0} // optional: disable until selection
+  >
+    Save Unenrollment
+  </Button>
+</div>
   );
 }
