@@ -10,7 +10,7 @@ import { RootState } from "../../store";
 import * as client from "../Unenrollment/client";
 import * as clientCourse from "../../Courses/client";
 
-export default function EnrollmentPage() {
+export default function UnenrollmentPage() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const [selected, setSelected] = useState<string[]>([]);
