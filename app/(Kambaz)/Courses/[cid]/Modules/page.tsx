@@ -25,20 +25,20 @@ export default function Modules() {
   const dispatch = useDispatch();
 
   const onUpdateModule = async (module: any) => {
-    await client.updateModule(cid, module);
+    await client.updateModule(module);
     const newModules = modules.map((m: any) => m._id === module._id ? module : m );
     dispatch(setModules(newModules));
   };
 
   const onRemoveModule = async (moduleId: string) => {
-    await client.deleteModule(cid, moduleId);
+    await client.deleteModule(moduleId);
     dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
   };
 
    const onCreateModuleForCourse = async () => {
     if (!cid) return;
     const newModule = { name: moduleName, course: cid };
-    const module = await client.createModuleForCourse(cid, newModule);
+    const module = await client.createModuleForCourse(newModule);
     dispatch(setModules([...modules, module]));
   };
 
