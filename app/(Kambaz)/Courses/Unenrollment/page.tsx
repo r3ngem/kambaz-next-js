@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { redirect } from "next/navigation";
 import { setCourses } from "../reducer";
 import { RootState } from "../../store";
-import * as client from "../../Courses/client";
+import * as client from "../Unenrollment/client";
+import * as clientCourse from "../../Courses/client";
 
 export default function EnrollmentPage() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
@@ -17,7 +18,7 @@ export default function EnrollmentPage() {
 
   const fetchCourses = async () => {
       try {
-        const courses = await client.findMyCourses();
+        const courses = await clientCourse.findMyCourses();
         dispatch(setCourses(courses));
       } catch (error) {
         console.error(error);
