@@ -56,6 +56,11 @@ export default function Dashboard() {
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
 
+      <Link href={`/Enrollment`} className="btn btn-primary" >
+        Enroll in a Course</Link> <hr /><br />
+      <Link href={`/Unenrollment`} className="btn btn-primary" >
+        Unenroll from a Course</Link> <hr /><br />
+
       <h5>New Course
           <button className="btn btn-primary float-end"
                   id="wd-add-new-course-click"
